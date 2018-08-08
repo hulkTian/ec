@@ -1,7 +1,5 @@
 package com.hulk.example;
 
-import android.widget.Toast;
-
 import com.hulk.core.activities.ProxyActivity;
 import com.hulk.core.delegates.HulkDelegate;
 
