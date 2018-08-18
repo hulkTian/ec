@@ -4,6 +4,7 @@ import com.hulk.core.app.ConfigKeys;
 import com.hulk.core.app.Hulk;
 
 import java.util.ArrayList;
+import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -17,6 +18,18 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 
 public class RestCreator {
+
+    /**
+     * 参数容器
+     */
+    private static final class ParamsHolder {
+        private static final WeakHashMap<String, Object> PARAMS = new WeakHashMap<>();
+    }
+
+    public static WeakHashMap<String, Object> getParams() {
+        return ParamsHolder.PARAMS;
+    }
+
     /**
      * 构建全局Retrofit客户端
      */

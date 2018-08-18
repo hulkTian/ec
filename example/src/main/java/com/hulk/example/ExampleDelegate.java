@@ -32,7 +32,7 @@ public class ExampleDelegate extends HulkDelegate {
 
     private void testRestClient() {
         RestClient.builder()
-                .url("http://news.baidu.com")
+                .url("https://hibingoimg-1253225888.cosgz.myqcloud.com/android/hibingo.apk")
                 .loader(getContext())
                 .success(new ISuccess() {
                     @Override
@@ -49,7 +49,9 @@ public class ExampleDelegate extends HulkDelegate {
                     public void onError(int code, String msg) {
                     }
                 })
+                .dir("hibingo")
+                .extension("apk")
                 .build()
-                .get();
+                .download();
     }
 }

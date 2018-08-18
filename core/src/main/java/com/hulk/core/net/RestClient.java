@@ -7,6 +7,7 @@ import com.hulk.core.net.callback.IFailure;
 import com.hulk.core.net.callback.IRequest;
 import com.hulk.core.net.callback.ISuccess;
 import com.hulk.core.net.callback.RequestCallbacks;
+import com.hulk.core.net.download.DownloadHandler;
 import com.hulk.core.ui.loader.HulkLoader;
 import com.hulk.core.ui.loader.LoaderStyle;
 
@@ -22,7 +23,6 @@ import retrofit2.Callback;
 /**
  * Created by tzh on 2018/8/8.
  */
-
 public class RestClient {
 
     private final String URL;
@@ -33,11 +33,18 @@ public class RestClient {
     private final IError ERROR;
     private final RequestBody BODY;
     private final File FILE;
+    private final String DOWNLOAD_DIR;
+    private final String EXTENSION;
+    private final String NAME;
     private final LoaderStyle LOADER_STYLE;
     private final Context CONTEXT;
 
     RestClient(String url,
-               WeakHashMap<String, Object> params, IRequest request,
+               WeakHashMap<String, Object> params,
+               String downloadDir,
+               String extension,
+               String name,
+               IRequest request,
                ISuccess success,
                IFailure failure,
                IError error,
@@ -47,6 +54,9 @@ public class RestClient {
                LoaderStyle loaderStyle) {
         this.URL = url;
         this.PARAMS = params;
+        this.DOWNLOAD_DIR = downloadDir;
+        this.EXTENSION = extension;
+        this.NAME = name;
         this.REQUEST = request;
         this.SUCCESS = success;
         this.FAILURE = failure;
@@ -144,6 +154,12 @@ public class RestClient {
 
     public final void upload() {
         request(HttpMethod.UPLOAD);
+    }
+
+    public final void download() {
+        new DownloadHandler(URL, REQUEST, DOWNLOAD_DIR, EXTENSION, NAME,
+                SUCCESS, FAILURE, ERROR)
+                .handleDownload();
     }
 
 }
