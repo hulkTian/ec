@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hulk.core.activities.ProxyActivity;
+
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
@@ -43,5 +45,9 @@ public abstract class BaseDelegate extends SwipeBackFragment {
         mRootView = rootView;
         onBindView(savedInstanceState, rootView);
         return mRootView;
+    }
+
+    public final ProxyActivity getProxyActivity() {
+        return (ProxyActivity) _mActivity;
     }
 }
