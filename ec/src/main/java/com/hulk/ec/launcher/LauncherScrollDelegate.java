@@ -1,5 +1,6 @@
 package com.hulk.ec.launcher;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,6 +8,8 @@ import android.view.View;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.hulk.core.app.AccountManager;
+import com.hulk.core.app.IUserChecker;
 import com.hulk.core.delegates.HulkDelegate;
 import com.hulk.core.util.storage.HulkPreference;
 import com.hulk.ec.R;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 public class LauncherScrollDelegate extends HulkDelegate implements OnItemClickListener{
     private ConvenientBanner<Integer> mConvenientBanner = null;
     private final ArrayList<Integer> INTEGERS = new ArrayList<>();
+    private ILauncherListener mILauncherListener = null;
 
     private void initBanner() {
         INTEGERS.add(R.mipmap.launcher_01);
@@ -32,6 +36,14 @@ public class LauncherScrollDelegate extends HulkDelegate implements OnItemClickL
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
                 .setOnItemClickListener(this)
                 .setCanLoop(false);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof ILauncherListener) {
+            mILauncherListener = (ILauncherListener) context;
+        }
     }
 
     @Override
@@ -51,6 +63,23 @@ public class LauncherScrollDelegate extends HulkDelegate implements OnItemClickL
         if (position == INTEGERS.size() - 1) {
             HulkPreference.setAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name(),  true);
             //检查用户是否已经登录
+            AccountManager.checkAccount(new IUserChecker() {
+                @Override
+                public void onSignIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.SIGNED);
+//                        getSupportDelegate().pop();
+                    }
+                }
+
+                @Override
+                public void onNotSignIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.NOT_SIGNED);
+//                        getSupportDelegate().pop();
+                    }
+                }
+            });
         }
     }
 }

@@ -31,9 +31,9 @@ public class HulkLoader {
      */
     private static void showLoading(Context context, String type) {
         final AppCompatDialog dialog = new AppCompatDialog(context, R.style.dialog);
-
         final AVLoadingIndicatorView avLoadingIndicatorView = LoaderCreator.create(type, context);
         dialog.setContentView(avLoadingIndicatorView);
+        dialog.setCanceledOnTouchOutside(false);
         //计算屏幕宽高
         int deviceWidth = DimenUtil.getScreenWidth();
         int deviceHeight = DimenUtil.getScreenHeight();

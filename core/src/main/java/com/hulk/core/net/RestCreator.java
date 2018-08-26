@@ -49,7 +49,7 @@ public class RestCreator {
      * 构建OkHttp
      */
     private static final class OKHttpHolder {
-        private static final int TIME_OUT = 60;
+        private static final int TIME_OUT = 10;
         private static final OkHttpClient.Builder BUILDER = new OkHttpClient.Builder();
         private static final ArrayList<Interceptor> INTERCEPTORS = Hulk.getConfiguration(ConfigKeys.INTERCEPTOR);
         private static OkHttpClient.Builder addInterceptor() {

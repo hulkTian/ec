@@ -1,11 +1,14 @@
 package com.hulk.ec.launcher;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
+import com.hulk.core.app.AccountManager;
+import com.hulk.core.app.IUserChecker;
 import com.hulk.core.delegates.HulkDelegate;
 import com.hulk.core.util.storage.HulkPreference;
 import com.hulk.core.util.timer.BaseTimerTask;
@@ -23,11 +26,21 @@ public class LauncherDelegate extends HulkDelegate implements ITimerListener {
     private AppCompatTextView mTVTimer;
     private Timer mTimer;
     private int mCount = 5;
+    private ILauncherListener mILauncherListener;
 
     private void initTimer() {
         mTimer = new Timer();
         final BaseTimerTask task = new BaseTimerTask(this);
         mTimer.schedule(task, 0, 1000);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        //保证activity已经实现了ILauncherListener接口
+        if (activity instanceof ILauncherListener) {
+            mILauncherListener = (ILauncherListener) activity;
+        }
     }
 
     private void onClickTimerView() {
@@ -39,12 +52,26 @@ public class LauncherDelegate extends HulkDelegate implements ITimerListener {
     }
 
     //判断是否显示滑动启动页
-    private void checkIsShowScroll(){
+    private void checkIsShowScroll() {
         if (!HulkPreference.getAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name())) {
-            getSupportDelegate().start(new LauncherScrollDelegate(), SINGLETASK);
+            getSupportDelegate().startWithPop(new LauncherScrollDelegate());
         } else {
-            //检查用户是否登录APP
+            //检查用户是否登录了APP
+            AccountManager.checkAccount(new IUserChecker() {
+                @Override
+                public void onSignIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.SIGNED);
+                    }
+                }
 
+                @Override
+                public void onNotSignIn() {
+                    if (mILauncherListener != null) {
+                        mILauncherListener.onLauncherFinish(OnLauncherFinishTag.NOT_SIGNED);
+                    }
+                }
+            });
         }
     }
 
