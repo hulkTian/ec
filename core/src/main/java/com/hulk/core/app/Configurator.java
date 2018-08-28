@@ -1,5 +1,6 @@
 package com.hulk.core.app;
 
+import android.app.Activity;
 import android.os.Handler;
 
 import com.joanzapata.iconify.IconFontDescriptor;
@@ -98,6 +99,21 @@ public class Configurator {
      */
     public final Configurator withLoaderDelayed(long delayed) {
         HULK_CONFIGS.put(ConfigKeys.LOADER_DELAYED, delayed);
+        return this;
+    }
+
+    public final Configurator withWeChatAppId(String appId) {
+        HULK_CONFIGS.put(ConfigKeys.WE_CHAT_APP_ID, appId);
+        return this;
+    }
+
+    public final Configurator withWeChatAppSecret(String appSecret) {
+        HULK_CONFIGS.put(ConfigKeys.WE_CHAT_APP_SECRET, appSecret);
+        return this;
+    }
+
+    public final Configurator withActivity(Activity activity) {
+        HULK_CONFIGS.put(ConfigKeys.ACTIVITY, activity);
         return this;
     }
 

@@ -1,8 +1,11 @@
 package com.hulk.example;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.hulk.core.activities.ProxyActivity;
+import com.hulk.core.app.Hulk;
 import com.hulk.core.delegates.HulkDelegate;
 import com.hulk.ec.launcher.ILauncherListener;
 import com.hulk.ec.launcher.LauncherDelegate;
@@ -23,6 +26,12 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
     @Override
     public void post(Runnable runnable) {
 
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Hulk.getConfigurator().withActivity(this);
     }
 
     @Override

@@ -11,5 +11,8 @@ public enum ConfigKeys {
     ICON,
     INTERCEPTOR,
     LOADER_DELAYED,
-    HANDLER
+    HANDLER,
+    WE_CHAT_APP_ID,
+    WE_CHAT_APP_SECRET,
+    ACTIVITY
 }

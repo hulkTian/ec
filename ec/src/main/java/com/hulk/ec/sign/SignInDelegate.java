@@ -16,6 +16,8 @@ import com.hulk.core.net.callback.IError;
 import com.hulk.core.net.callback.IFailure;
 import com.hulk.core.net.callback.ISuccess;
 import com.hulk.core.util.HulkLogger;
+import com.hulk.core.wechat.HulkWeChat;
+import com.hulk.core.wechat.callbacks.IWeChatSignInCallback;
 import com.hulk.ec.R;
 
 /**
@@ -73,15 +75,15 @@ public class SignInDelegate extends HulkDelegate implements View.OnClickListener
      * 微信登录
      */
     private void onClickWeChat() {
-//        LatteWeChat
-//                .getInstance()
-//                .onSignSuccess(new IWeChatSignInCallback() {
-//                    @Override
-//                    public void onSignInSuccess(String userInfo) {
-//                        Toast.makeText(getContext(), userInfo, Toast.LENGTH_LONG).show();
-//                    }
-//                })
-//                .signIn();
+        HulkWeChat
+                .getInstance()
+                .onSignSuccess(new IWeChatSignInCallback() {
+                    @Override
+                    public void onSignInSuccess(String userInfo) {
+                        Toast.makeText(getContext(), userInfo, Toast.LENGTH_LONG).show();
+                    }
+                })
+                .signIn();
     }
 
     private void onClickLink() {

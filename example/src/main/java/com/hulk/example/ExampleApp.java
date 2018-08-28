@@ -23,6 +23,8 @@ public class ExampleApp extends Application {
                 .withLoaderDelayed(1000)
                 .withApiHost("http://114.67.235.114/RestServer/api/")
                 .withInterceptor(new DebugInterceptor("test", R.raw.test))
+                .withWeChatAppId("你的微信AppKey")
+                .withWeChatAppSecret("你的微信AppSecret")
                 .configure();
     }
 }
