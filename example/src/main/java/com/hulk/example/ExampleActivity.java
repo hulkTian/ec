@@ -10,6 +10,7 @@ import com.hulk.core.delegates.HulkDelegate;
 import com.hulk.ec.launcher.ILauncherListener;
 import com.hulk.ec.launcher.LauncherDelegate;
 import com.hulk.ec.launcher.OnLauncherFinishTag;
+import com.hulk.ec.main.EcBottomDelegate;
 import com.hulk.ec.sign.ISignListener;
 import com.hulk.ec.sign.SignInDelegate;
 
@@ -48,8 +49,8 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
     public void onLauncherFinish(OnLauncherFinishTag tag) {
         switch (tag) {
             case SIGNED:
-                Toast.makeText(this, "启动结束，用户登录了", Toast.LENGTH_LONG).show();
-//                getSupportDelegate().startWithPop(new EcBottomDelegate());
+//                Toast.makeText(this, "启动结束，用户登录了", Toast.LENGTH_LONG).show();
+                getSupportDelegate().startWithPop(new EcBottomDelegate());
                 break;
             case NOT_SIGNED:
                 Toast.makeText(this, "启动结束，用户没登录", Toast.LENGTH_LONG).show();
