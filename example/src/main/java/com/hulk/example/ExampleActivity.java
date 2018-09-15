@@ -2,6 +2,7 @@ package com.hulk.example;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.widget.Toast;
 
 import com.hulk.core.activities.ProxyActivity;
@@ -13,6 +14,8 @@ import com.hulk.ec.launcher.OnLauncherFinishTag;
 import com.hulk.ec.main.EcBottomDelegate;
 import com.hulk.ec.sign.ISignListener;
 import com.hulk.ec.sign.SignInDelegate;
+
+import qiu.niorgai.StatusBarCompat;
 
 /**
  * 单activity实现
@@ -32,7 +35,12 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
         Hulk.getConfigurator().withActivity(this);
+        StatusBarCompat.translucentStatusBar(this, true);
     }
 
     @Override

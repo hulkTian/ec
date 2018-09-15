@@ -1,1 +1,1 @@
-include ':example', ':annotations', ':compiler', ':core', ':ec'
+include ':example', ':hulk-annotations', ':hulk-compiler', ':hulk-core', ':hulk-ec'
